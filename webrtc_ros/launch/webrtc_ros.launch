@@ -30,5 +30,6 @@
   </node>
   <node name="webrtc_server" pkg="webrtc_ros" type="webrtc_ros_server_node">
     <param name="port" value="9090"/>
+    <param name="image_transport" value="raw" />
   </node>
 </launch>
