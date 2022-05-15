@@ -1,3 +1,4 @@
+#include <iostream>
 #include <ros/ros.h>
 #include <ros/package.h>
 #include <webrtc_ros/webrtc_web_server.h>
@@ -42,7 +43,7 @@ public:
 WebrtcWebServerImpl(int port, SignalingChannelCallback callback, void* data)
   : handler_group_(async_web_server_cpp::HttpReply::stock_reply(async_web_server_cpp::HttpReply::not_found)),
     callback_(callback), data_(data)
-{
+{  
   std::vector<async_web_server_cpp::HttpHeader> any_origin_headers;
   any_origin_headers.push_back(async_web_server_cpp::HttpHeader("Access-Control-Allow-Origin", "*"));
   handler_group_.addHandlerForPath("/", async_web_server_cpp::HttpReply::from_file(async_web_server_cpp::HttpReply::ok, "text/html",
@@ -137,6 +138,7 @@ bool handle_list_streams(const async_web_server_cpp::HttpRequest &request,
   .header("Cache-Control", "no-cache, no-store, must-revalidate, pre-check=0, post-check=0, max-age=0")
   .header("Pragma", "no-cache")
   .header("Content-type", "text/json")
+  .header("Access-Control-Allow-Origin", "*")
   .write(connection);
 
   // Don't use jsoncpp cause we link against c++11 library (many not actually be an issue)
